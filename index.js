@@ -9,7 +9,7 @@ import paymentRoutes from './src/routes/paymentRoutes.js';
 
 
 const app = express();
-const PORT = process.env.DB_PORT || 3000;
+const PORT = process.env.PORT || 3000;
 dotenv.config();
 
   //body parser
