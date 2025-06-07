@@ -1,4 +1,7 @@
 import dotenv from 'dotenv';
+
+dotenv.config();
+
 import express from "express";
 import bodyParser from "body-parser";
 import contactRoutes from './src/routes/contactRoutes.js';
@@ -10,7 +13,6 @@ import paymentRoutes from './src/routes/paymentRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-dotenv.config();
 
   //body parser
 app.use(bodyParser.urlencoded({ extended:true }));
@@ -24,7 +26,7 @@ app.use('/clients', clientRoutes);
 app.use('/payments', paymentRoutes);
 
 app.get('/', (req, res) =>
-    res.send(`Node and express server is running on port ${PORT}`)
+    res.status(200).json({ status: 'API running!' })
 );
 
 
