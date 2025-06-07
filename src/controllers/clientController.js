@@ -23,7 +23,7 @@ export const getAllClientsController = async (req, res) => {
     res.status(200).json(clients);
   } catch (err) {
     res.status(500).json({ error: err.message });
-    console.log('request error');
+    console.log('request error: ', err.message);
   }
 };
 

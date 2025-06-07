@@ -34,13 +34,13 @@ export const createClient = async (client) => {
 
 // READ ALL
 export const getAllClients = async () => {
-  const [rows] = await db.query('SELECT * FROM tblClient');
+  const [rows] = await db.query('SELECT * FROM tblclient');
   return rows;
 };
 
 // READ ONE
 export const getClientById = async (id) => {
-  const [rows] = await db.query('SELECT * FROM tblClient WHERE ClientID = ?', [id]);
+  const [rows] = await db.query('SELECT * FROM tblclient WHERE ClientID = ?', [id]);
   return rows[0];
 };
 

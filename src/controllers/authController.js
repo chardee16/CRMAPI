@@ -25,6 +25,8 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
+  
+  //console.log("Request Login: ", req.body);cl
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     console.error('Validation errors:', errors.array());
