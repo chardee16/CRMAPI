@@ -4,6 +4,7 @@ import {
   createPaymentController,
   getPaymentByIdController,
   getPaymentReportController,
+  fetchPaymentController,
   deletePaymentController
 } from '../controllers/paymentController.js';
 
@@ -13,7 +14,7 @@ router.post('/', verifyToken, createPaymentController);
 router.get('/:clientId', verifyToken, getPaymentByIdController);
 
 router.get('/', verifyToken, getPaymentReportController);
-outer.get('/FetchPayment', verifyToken, getPaymentReportController);
+router.get('/FetchPayment', verifyToken,  fetchPaymentController);
 // router.put('/:id', updateClientController);
 router.delete('/:paymentId', deletePaymentController);
 
