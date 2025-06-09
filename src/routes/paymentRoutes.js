@@ -3,7 +3,8 @@ import express from 'express';
 import {
   createPaymentController,
   getPaymentByIdController,
-  getPaymentReportController
+  getPaymentReportController,
+  deletePaymentController
 } from '../controllers/paymentController.js';
 
 const router = express.Router();
@@ -12,7 +13,8 @@ router.post('/', verifyToken, createPaymentController);
 router.get('/:clientId', verifyToken, getPaymentByIdController);
 
 router.get('/', verifyToken, getPaymentReportController);
+outer.get('/FetchPayment', verifyToken, getPaymentReportController);
 // router.put('/:id', updateClientController);
-// router.delete('/:id', deleteClientController);
+router.delete('/:paymentId', deletePaymentController);
 
 export default router;

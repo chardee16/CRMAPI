@@ -1,18 +1,21 @@
 import {
     insertPayment,
     getPaymentById,
-    getPaymentReport
+    getPaymentReport,
+    fetchPayment,
+    deletePayment
   } from '../models/paymentModel.js';
 
 
   // Insert
   export const createPaymentController = async (req, res) => {
     try {
-      //console.log('Request Parameter:', req.body);
+      console.log('Request Parameter:', req.body);
       const resultId = await insertPayment(req.body);
       res.status(201).json({ message: 'Payment Recorded', resultId: resultId });
     } catch (err) {
       res.status(500).json({ error: err.message });
+      console.log('Error:', err.message );
     }
   };
 
@@ -22,7 +25,7 @@ import {
     try {
       //console.log('Request Parameter:', req.params.clientId);
       const client = await getPaymentById(req.params.clientId);
-      if (!client) return res.status(404).json({ message: 'Client not found' });
+      if (!client) return res.status(404).json({ message: 'Payment not found' });
       res.status(200).json(client);
     } catch (err) {
       res.status(500).json({ error: err.message });
@@ -44,6 +47,33 @@ import {
       if (!report) return res.status(404).json({ message: 'Report is Empty' });
 
       res.status(200).json(report);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  };
+
+
+
+  export const fetchPaymentController = async (req, res) => {
+    try {
+      console.log('Request Fetch payment:');
+      const report = await fetchPayment();
+
+      if (!report) return res.status(404).json({ message: 'Report is Empty' });
+
+      res.status(200).json(report);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  };
+
+
+  // DELETE
+  export const deletePaymentController = async (req, res) => {
+    try {
+      const affectedRows = await deletePayment(req.params.paymentId);
+      if (!affectedRows) return res.status(404).json({ message: 'Payment not found' });
+      res.status(200).json({ message: 'Payment deleted successfully' });
     } catch (err) {
       res.status(500).json({ error: err.message });
     }

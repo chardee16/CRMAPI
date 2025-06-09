@@ -1,3 +1,4 @@
+//import mysql from 'mysql2';
 import db from '../../db.js';
 
 // Insert
@@ -8,15 +9,36 @@ export const insertPayment = async (payment) => {
     type,
     homeowners,
     guests,
-    date 
+    date,
+    ispaid
   } = payment;
 
-  const [result] = await db.query(`
-    INSERT INTO payments (clientId, amount, type,homeowner,guest, date) VALUES (?, ?, ?, ?, ?, ?)`,
-    [
-      clientId, amount, type, homeowners, guests, new Date(date)
-    ]
-  );
+  // const [result] = await db.query(`
+  //   INSERT INTO payments (clientId, amount, type,homeowner,guest, date,ispaid) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+  //   [
+  //     clientId, amount, type, homeowners, guests, new Date(date), ispaid
+  //   ]
+  // );
+  const sqlQuery = `INSERT INTO payments 
+                      (
+                          clientId, 
+                          amount, 
+                          type,
+                          homeowner,
+                          guest, 
+                          date,
+                          ispaid
+                      ) VALUES 
+                      (?, ?, ?, ?, ?, ?, ?)`;
+
+  const params = [clientId, amount, type, homeowners, guests, new Date(date), ispaid];
+
+  //const fullQuery = mysql.format(sqlQuery, params);
+  //console.log('Formatted SQL Query:', fullQuery);
+
+  const [result] = await db.query(sqlQuery, params);
+
+
 
   return result.insertId;
 };
@@ -26,7 +48,7 @@ export const insertPayment = async (payment) => {
 // READ ONE
 export const getPaymentById = async (clientId ) => {
   
-  const [rows] = await db.query('SELECT id, amount, homeowner,guest,type, date FROM payments WHERE clientId = ? ORDER BY date DESC', [clientId ]);
+  const [rows] = await db.query('SELECT id, amount, homeowner,guest,type, date, ispaid, isfetched FROM payments WHERE clientId = ? ORDER BY date DESC', [clientId ]);
   return rows;
 };
 
@@ -47,7 +69,9 @@ export const getPaymentReport = async (from, to) => {
                     amount,     
                     homeowner,     
                     guest,     
-                    date 
+                    date,
+                    ispaid,
+                    isfetched
                 FROM payments p 
                 LEFT JOIN 
                   tblclient c  ON c.clientId = p.clientId 
@@ -59,4 +83,38 @@ export const getPaymentReport = async (from, to) => {
 
   const [rows] = await db.query(sql, params);
   return rows;
+};
+
+
+
+//READ Unfetched payment
+export const fetchPayment = async () => { 
+
+  const sql = `SELECT id,  
+                    p.clientId,     
+                    CONCAT(c.FirstName, ' ', c.LastName) AS Fullname,
+                    amount,     
+                    homeowner,     
+                    guest,     
+                    date,
+                    ispaid,
+                    isfetched
+                FROM payments p 
+                LEFT JOIN 
+                  tblclient c  ON c.clientId = p.clientId 
+                WHERE 
+                ispaid = 0
+                and isfetched = 0
+                ORDER BY date DESC LIMIT 0, 1000`;
+
+
+  const [rows] = await db.query(sql, params);
+  return rows;
+};
+
+
+// DELETE
+export const deletePayment = async (paymentId) => {
+  const [result] = await db.query('DELETE FROM payments WHERE id = ?', [paymentId]);
+  return result.affectedRows;
 };
