@@ -56,14 +56,15 @@ import {
 
   export const fetchPaymentController = async (req, res) => {
     try {
-      console.log('Request Fetch payment:');
       const report = await fetchPayment();
 
       if (!report) return res.status(404).json({ message: 'Report is Empty' });
 
       res.status(200).json(report);
+
     } catch (err) {
       res.status(500).json({ error: err.message });
+      console.log('Error: ', err.message);
     }
   };
 

@@ -108,7 +108,7 @@ export const fetchPayment = async () => {
                 ORDER BY date DESC LIMIT 0, 1000`;
 
 
-  const [rows] = await db.query(sql, params);
+  const [rows] = await db.query(sql);
   return rows;
 };
 

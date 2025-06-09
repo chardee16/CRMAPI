@@ -4,17 +4,16 @@ import {
   createPaymentController,
   getPaymentByIdController,
   getPaymentReportController,
-  fetchPaymentController,
+  fetchPaymentController ,
   deletePaymentController
 } from '../controllers/paymentController.js';
 
 const router = express.Router();
 router.post('/', verifyToken, createPaymentController);
 // router.get('/', getAllClientsController);
-router.get('/:clientId', verifyToken, getPaymentByIdController);
-
+router.get('/fetchpayment', verifyToken,  fetchPaymentController );
 router.get('/', verifyToken, getPaymentReportController);
-router.get('/FetchPayment', verifyToken,  fetchPaymentController);
+router.get('/:clientId', verifyToken, getPaymentByIdController);
 // router.put('/:id', updateClientController);
 router.delete('/:paymentId', deletePaymentController);
 
