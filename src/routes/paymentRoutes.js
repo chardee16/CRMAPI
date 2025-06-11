@@ -5,7 +5,8 @@ import {
   getPaymentByIdController,
   getPaymentReportController,
   fetchPaymentController ,
-  deletePaymentController
+  deletePaymentController,
+  updateMultiplePaymentsController
 } from '../controllers/paymentController.js';
 
 const router = express.Router();
@@ -16,5 +17,7 @@ router.get('/', verifyToken, getPaymentReportController);
 router.get('/:clientId', verifyToken, getPaymentByIdController);
 // router.put('/:id', updateClientController);
 router.delete('/:paymentId', deletePaymentController);
+
+router.put('/update-multiple', verifyToken, updateMultiplePaymentsController);
 
 export default router;

@@ -3,7 +3,8 @@ import {
     getPaymentById,
     getPaymentReport,
     fetchPayment,
-    deletePayment
+    deletePayment,
+    updateMultiplePayments
   } from '../models/paymentModel.js';
 
 
@@ -75,6 +76,24 @@ import {
       const affectedRows = await deletePayment(req.params.paymentId);
       if (!affectedRows) return res.status(404).json({ message: 'Payment not found' });
       res.status(200).json({ message: 'Payment deleted successfully' });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  };
+
+//Update Multple
+  export const updateMultiplePaymentsController = async (req, res) => {
+    try {
+      //console.log('Request Parameter:', req.query);
+      const { paymentIds } = req.body;
+
+      if (!Array.isArray(paymentIds) || paymentIds.length === 0) {
+        return res.status(400).json({ error: 'paymentIds must be a non-empty array' });
+      }
+      
+      await updateMultiplePayments(paymentIds);
+      res.status(200).json({ message: 'Payment updated' });
+      
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
