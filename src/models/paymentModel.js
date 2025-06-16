@@ -127,11 +127,10 @@ export const updateMultiplePayments = async (paymentIds) => {
     const sql = `UPDATE payments SET isfetched = 1 WHERE id IN (${placeholders})`;
 
 
-     const [result] = await db.execute(sql, values); // assumes mysql2/promise
+     const [result] = await db.execute(sql); // assumes mysql2/promise
      return result.affectedRows;
 
   } catch (error) {
     console.error('Error updating payments:', error);
-    res.status(500).json({ error: 'Failed to update payments' });
   }
 };
