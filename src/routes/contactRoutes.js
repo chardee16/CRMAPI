@@ -9,7 +9,7 @@ import {
 
 const router = express.Router();
 
-router.get('/', verifyToken, getAllContacts);
+router.get('/', getAllContacts);
 router.post('/', verifyToken, addNewContact);
 router.put('/:contactId', verifyToken, updateContact);
 router.delete('/:contactId', verifyToken, deleteContact);

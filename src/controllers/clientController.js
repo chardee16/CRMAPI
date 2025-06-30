@@ -41,7 +41,8 @@ export const getClientByIdController = async (req, res) => {
 // UPDATE
 export const updateClientController = async (req, res) => {
   try {
-    const affectedRows = await updateClient(req.params.id, req.body);
+    console.log("Request Update");
+    const affectedRows = await updateClient(req.params.clientId, req.body);
     if (!affectedRows) return res.status(404).json({ message: 'Client not found' });
     res.status(200).json({ message: 'Client updated successfully' });
   } catch (err) {

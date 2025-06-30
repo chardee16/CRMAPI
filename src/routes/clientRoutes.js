@@ -13,7 +13,7 @@ const router = express.Router();
 router.post('/', verifyToken, createClientController);
 router.get('/', verifyToken, getAllClientsController);
 router.get('/:clientId', verifyToken, getClientByIdController);
-router.put('/:id', verifyToken, updateClientController);
+router.put('/:clientId', verifyToken, updateClientController);
 router.delete('/:id', verifyToken, deleteClientController);
 
 export default router;
