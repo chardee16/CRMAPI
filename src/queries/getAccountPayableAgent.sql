@@ -18,7 +18,7 @@ INNER JOIN tblglcontrol gl ON
 	gl.SLC_CODE = ap.SLC_CODE and
     gl.SLT_CODE = ap.SLT_CODE and
     gl.SLE_CODE = ap.SLE_CODE
-LEFT JOIN tbltransactiontetails trdt ON
+LEFT JOIN tbltransactiondetails trdt ON
 	trdt.SLC_CODE =  ap.SLC_CODE and
     trdt.SLT_CODE =  ap.SLT_CODE and
     trdt.SLE_CODE =  ap.SLE_CODE and
