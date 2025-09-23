@@ -312,7 +312,7 @@ export const postHousingApplication = async (transaction, transactionDetails, ac
           
           if(detail.SLC_CODE == 12){
             const [refResult] = await conn.query(
-            `SELECT ReferenceNo FROM tblcccountsreceivable WHERE SLC_CODE = ? AND SLT_CODE = ? AND ClientID = ?`,
+            `SELECT ReferenceNo FROM tblacccountsreceivable WHERE SLC_CODE = ? AND SLT_CODE = ? AND ClientID = ?`,
             [detail.SLC_CODE, detail.SLT_CODE,detail.ClientID]);
 
 
