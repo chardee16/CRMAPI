@@ -367,6 +367,7 @@ export const postHousingApplication = async (transaction, transactionDetails, ac
       return 1;
     }
     catch(error){
+        console.error("postHousingApplication error:", error);
         await conn.rollback();
         throw error;
     } 
