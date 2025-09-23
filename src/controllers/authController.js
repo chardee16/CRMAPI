@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { validationResult } from 'express-validator';
-import { findUserByEmail, createUser } from '../models/userModel.js';
+import { findUserByUsername, createUser } from '../models/userModel.js';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'supersecretkey';
 
@@ -12,7 +12,7 @@ export const register = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const existingUser = await findUserByEmail(email);
+    const existingUser = await findUserByUsername(email);
     if (existingUser) return res.status(400).json({ msg: 'Email already in use' });
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -34,25 +34,40 @@ export const login = async (req, res) => {
   }
   
 
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
   try {
-    const user = await findUserByEmail(email);
+    const user = await findUserByUsername(username);
     if (!user) {
       console.error('User not found');
       return res.status(400).json({ msg: 'Invalid credentials' });
     }
       
-
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = await bcrypt.compare(password, user.Password);
     if (!isMatch) {
       console.error('Password mismatch');
       return res.status(400).json({ msg: 'Invalid credentials' });
     }
-      
-
-    const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
-    res.json({ token });
+    
+    const token = jwt.sign({ id: user.id, username: user.username }, JWT_SECRET, { expiresIn: '1h' });
+    res.json({ 
+      message: "Login successful",
+      token,
+      user: {
+        UserID: user.UserID,
+        username: user.Username,
+        isAdmin: user.IsAdmin,
+        MinimumBill: user.MinimumBill,
+        MinimumConsumption: user.MinimumConsumption,
+        FirstExcess: user.FirstExcess,
+        SecondExcess: user.SecondExcess,
+        ThirdExcess: user.ThirdExcess,
+        LastExcess: user.LastExcess,
+        IsTeller : user.IsTeller,
+        AccountCodeCASH : user.AccountCodeCASH,
+        AccountCodeCOCI : user.AccountCodeCOCI
+      }
+     });
 
   } catch (err) {
     console.error('Login error:', err);

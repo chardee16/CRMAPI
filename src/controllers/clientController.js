@@ -3,7 +3,9 @@ import {
     getAllClients,
     getClientById,
     updateClient,
-    deleteClient
+    deleteClient,
+    getAllHouseType,
+    getWithTypeClients
   } from '../models/clientModel.js';
 
 // CREATE
@@ -26,6 +28,19 @@ export const getAllClientsController = async (req, res) => {
     console.log('request error: ', err.message);
   }
 };
+
+
+export const getWithTypeClientsController = async (req, res) => {
+  try {
+    const clients = await getWithTypeClients(req.query.status);
+    res.status(200).json(clients);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+    console.log('request error: ', err.message);
+  }
+};
+
+
 
 // READ ONE
 export const getClientByIdController = async (req, res) => {
@@ -58,5 +73,18 @@ export const deleteClientController = async (req, res) => {
     res.status(200).json({ message: 'Client deleted successfully' });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+};
+
+
+
+// Get House Type
+export const getAllHouseTypeController = async (req, res) => {
+  try {
+    const houses = await getAllHouseType();
+    res.status(200).json(houses);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+    console.log('request error: ', err.message);
   }
 };

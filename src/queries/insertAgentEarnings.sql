@@ -1,0 +1,22 @@
+INSERT INTO tblagentearnings
+(
+    AgentID,
+    SLC_CODE,
+    SLT_CODE,
+    SLE_CODE,
+    ReferenceNo,
+    Amount,
+    TransactionDate,
+    HousingReferenceNo
+)
+Value
+(
+    ?,
+    ?,
+    ?,
+    ?,
+    ?,
+    ?,
+    NOW(),
+    ?
+)

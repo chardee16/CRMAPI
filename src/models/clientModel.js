@@ -1,4 +1,5 @@
 import db from '../../db.js'; // adjust path as needed
+import { loadSQL } from '../utils/loadSQL.js';
 
 // CREATE
 export const createClient = async (client) => {
@@ -17,19 +18,20 @@ export const createClient = async (client) => {
     FullAddress,
     ClientStatusDesc,
     PreviousReading,
-    LotArea
+    LotArea,
+    HouseTypeID
   } = client;
 
   const [result] = await db.query(`
     INSERT INTO tblClient (
       FirstName, MiddleName, LastName, ClientAccountStatusID,
       BlockNo, LotNo, Occupants, IsSenior,
-      SeniorCount, PreviousReading, LotArea
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      SeniorCount, PreviousReading, LotArea, HouseTypeID
+    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
       FirstName, MiddleName, LastName, ClientAccountStatusID,
       BlockNo, LotNo, Occupants, IsSenior,
-      SeniorCount, PreviousReading, LotArea
+      SeniorCount, PreviousReading, LotArea, HouseTypeID
     ]
   );
 
@@ -39,10 +41,22 @@ export const createClient = async (client) => {
 };
 
 // READ ALL
+const getAllClientsQuery = loadSQL('getAllClients.sql');
+
 export const getAllClients = async () => {
-  const [rows] = await db.query('SELECT * FROM tblclient');
+  const [rows] = await db.query(getAllClientsQuery);
   return rows;
 };
+
+
+const getClientWithTypeQuery = loadSQL('getClientWithType.sql');
+
+export const getWithTypeClients = async (status) => {
+  const [rows] = await db.query(getClientWithTypeQuery, [status]);
+  return rows;
+};
+
+
 
 // READ ONE
 export const getClientById = async (id) => {
@@ -63,19 +77,20 @@ export const updateClient = async (clientId, updatedClient) => {
     IsSenior,
     SeniorCount,
     PreviousReading,
-    LotArea
+    LotArea,
+    HouseTypeID
   } = updatedClient;
 
   const [result] = await db.query(`
     UPDATE tblClient SET
       FirstName = ?, MiddleName = ?, LastName = ?, ClientAccountStatusID = ?,
       BlockNo = ?, LotNo = ?, Occupants = ?, IsSenior = ?,
-      SeniorCount = ?, PreviousReading = ?, LotArea = ?
+      SeniorCount = ?, PreviousReading = ?, LotArea = ?, HouseTypeID = ?
     WHERE ClientID = ?`,
     [
       FirstName, MiddleName, LastName, ClientAccountStatusID,
       BlockNo, LotNo, Occupants, IsSenior,
-      SeniorCount, PreviousReading, LotArea, clientId
+      SeniorCount, PreviousReading, LotArea, HouseTypeID, clientId
     ]
   );
 
@@ -86,4 +101,12 @@ export const updateClient = async (clientId, updatedClient) => {
 export const deleteClient = async (id) => {
   const [result] = await db.query('DELETE FROM tblClient WHERE ClientID = ?', [id]);
   return result.affectedRows;
+};
+
+
+
+// READ ALL House Type
+export const getAllHouseType = async () => {
+  const [rows] = await db.query('SELECT HouseTypeID,HouseTypeDesc FROM tblHouseType');
+  return rows;
 };

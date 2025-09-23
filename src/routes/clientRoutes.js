@@ -5,13 +5,17 @@ import {
   getAllClientsController,
   getClientByIdController,
   updateClientController,
-  deleteClientController
+  deleteClientController,
+  getAllHouseTypeController,
+  getWithTypeClientsController
 } from '../controllers/clientController.js';
 
 const router = express.Router();
 
 router.post('/', verifyToken, createClientController);
-router.get('/', verifyToken, getAllClientsController);
+router.get('/gethousetype', verifyToken, getAllHouseTypeController);
+router.get('/withtype', verifyToken, getWithTypeClientsController);
+router.get('/getallclient',verifyToken, getAllClientsController);
 router.get('/:clientId', verifyToken, getClientByIdController);
 router.put('/:clientId', verifyToken, updateClientController);
 router.delete('/:id', verifyToken, deleteClientController);

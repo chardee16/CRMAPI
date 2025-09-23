@@ -13,8 +13,8 @@ router.post(
 
 router.post(
   '/login',
-  body('email').isEmail(),
-  body('password').exists(),
+  body('username').notEmpty().withMessage('Username is required'),
+  body('password').exists().withMessage('Password is required'),
   login
 );
 
