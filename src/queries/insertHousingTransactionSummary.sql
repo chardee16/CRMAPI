@@ -1,4 +1,4 @@
-INSERT INTO tblTransactionSummary (
+INSERT INTO tbltransactionsummary (
     TransactionCode, 
     TransYear, 
     CTLNo, 

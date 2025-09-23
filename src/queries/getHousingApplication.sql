@@ -22,6 +22,6 @@ SELECT Id,
     agent.AgentName,
     ha.CTLNo
 FROM tblhousingapplication ha
-INNER JOIN tblClient c ON c.ClientID = ha.ClientID
-INNER JOIN tblAgent agent ON agent.AgentID = ha.AgentID
+INNER JOIN tblclient c ON c.ClientID = ha.ClientID
+INNER JOIN tblagent agent ON agent.AgentID = ha.AgentID
 WHERE ha.ClientID = ?

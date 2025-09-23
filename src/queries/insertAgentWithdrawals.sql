@@ -1,4 +1,4 @@
-INSERT INTO tblAgentWithdrawals
+INSERT INTO tblagentwithdrawals
 (
     TransactionCode,
     TransYear,

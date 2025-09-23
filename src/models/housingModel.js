@@ -192,7 +192,7 @@ export const postHousingApplication = async (transaction, transactionDetails, ac
       // Get new CTLNo
       const [ctlRows] = await conn.query(`
         SELECT COALESCE(MAX(CTLNo), 0) + 1 AS CTLNo 
-        FROM tblTransactionSummary 
+        FROM tbltransactionsummary 
         WHERE TransactionCode = ? AND TransYear = YEAR(NOW())
       `, [transaction.TransactionCode]);
 
@@ -213,7 +213,7 @@ export const postHousingApplication = async (transaction, transactionDetails, ac
         //Insert Account Receivable
         for(const item of accountsReceivable){
           const [refResult] = await conn.query(
-            `SELECT COALESCE(MAX(RefCount), 0) + 1 AS RefCount FROM tblAccountsReceivable WHERE SLC_CODE = ? AND SLT_CODE = ?`,
+            `SELECT COALESCE(MAX(RefCount), 0) + 1 AS RefCount FROM tblaccountsreceivable WHERE SLC_CODE = ? AND SLT_CODE = ?`,
             [item.SLC_CODE, item.SLT_CODE]
           );
           
@@ -248,7 +248,7 @@ export const postHousingApplication = async (transaction, transactionDetails, ac
           let APReferenceNo = "";
 
           const [referenceResult] = await conn.query(
-            `SELECT ReferenceNo FROM tblAccountsPayable WHERE SLC_CODE = ? AND SLT_CODE = ? AND AgentID = ?`,
+            `SELECT ReferenceNo FROM tblaccountspayable WHERE SLC_CODE = ? AND SLT_CODE = ? AND AgentID = ?`,
             [item.SLC_CODE, item.SLT_CODE,item.AgentID]);
 
 
@@ -312,7 +312,7 @@ export const postHousingApplication = async (transaction, transactionDetails, ac
           
           if(detail.SLC_CODE == 12){
             const [refResult] = await conn.query(
-            `SELECT ReferenceNo FROM tblAccountsReceivable WHERE SLC_CODE = ? AND SLT_CODE = ? AND ClientID = ?`,
+            `SELECT ReferenceNo FROM tblcccountsreceivable WHERE SLC_CODE = ? AND SLT_CODE = ? AND ClientID = ?`,
             [detail.SLC_CODE, detail.SLT_CODE,detail.ClientID]);
 
 
@@ -321,7 +321,7 @@ export const postHousingApplication = async (transaction, transactionDetails, ac
           }
           else if(detail.SLC_CODE == 16){
             const [refResult] = await conn.query(
-            `SELECT ReferenceNo FROM tblAccountsPayable WHERE SLC_CODE = ? AND SLT_CODE = ? AND AgentID = ?`,
+            `SELECT ReferenceNo FROM tblaccountspayable WHERE SLC_CODE = ? AND SLT_CODE = ? AND AgentID = ?`,
             [detail.SLC_CODE, detail.SLT_CODE,detail.AgentID]);
 
 
@@ -398,7 +398,7 @@ export const reverseHousingApplication = async (transaction) => {
       // Get new CTLNo
       const [ctlRows] = await conn.query(`
         SELECT COALESCE(MAX(CTLNo), 0) + 1 AS CTLNo 
-        FROM tblTransactionSummary 
+        FROM tbltransactionsummary 
         WHERE TransactionCode = ? AND TransYear = YEAR(NOW())
       `, [ReversalTransCode]);
 
@@ -424,7 +424,7 @@ export const reverseHousingApplication = async (transaction) => {
 
 
       await conn.query(
-      `UPDATE tblTransactionDetails SET 
+      `UPDATE tbltransactiondetails SET 
         UPDTag = 5
         WHERE TransactionCode = ?
         AND CTLNo = ?

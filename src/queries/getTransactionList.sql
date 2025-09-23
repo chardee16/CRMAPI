@@ -6,8 +6,8 @@ SELECT ts.TransactionCode,
 	   td.Amt,
 	   td.UPDTag,
 	   td.ClientName
-from tblTransactionSummary ts
-INNER JOIN tblTransactionDetails td
+from tbltransactionsummary ts
+INNER JOIN tbltransactiondetails td
 	ON td.TransactionCode = ts.TransactionCode
 		and td.CTLNo = ts.CTLNo
 		and td.TransYear = ts.TransYear

@@ -35,7 +35,7 @@ export const postAgentDisbursementTransaction = async (transaction, transactionD
       // Get new CTLNo
       const [ctlRows] = await conn.query(`
         SELECT COALESCE(MAX(CTLNo), 0) + 1 AS CTLNo 
-        FROM tblTransactionSummary 
+        FROM tbltransactionsummary 
         WHERE TransactionCode = ? AND TransYear = YEAR(NOW())
       `, [transaction.TransactionCode]);
 

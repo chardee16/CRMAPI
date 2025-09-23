@@ -24,7 +24,7 @@ export const findUserByUsername = async (username) => {
         IFNULL(u.AccountCodeCASH, 0) AS AccountCodeCASH,
 		    IFNULL(u.AccountCodeCOCI, 0) AS AccountCodeCOCI
      FROM users u
-     LEFT JOIN tblStatic s ON s.StaticID IN (1, 2, 3, 4, 5, 6)
+     LEFT JOIN tblstatic s ON s.StaticID IN (1, 2, 3, 4, 5, 6)
      WHERE u.Username = ? AND u.IsActive = 1
      GROUP BY u.UserID,
               u.Username,

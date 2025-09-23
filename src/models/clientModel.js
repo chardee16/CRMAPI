@@ -23,7 +23,7 @@ export const createClient = async (client) => {
   } = client;
 
   const [result] = await db.query(`
-    INSERT INTO tblClient (
+    INSERT INTO tblclient (
       FirstName, MiddleName, LastName, ClientAccountStatusID,
       BlockNo, LotNo, Occupants, IsSenior,
       SeniorCount, PreviousReading, LotArea, HouseTypeID
@@ -82,7 +82,7 @@ export const updateClient = async (clientId, updatedClient) => {
   } = updatedClient;
 
   const [result] = await db.query(`
-    UPDATE tblClient SET
+    UPDATE tblclient SET
       FirstName = ?, MiddleName = ?, LastName = ?, ClientAccountStatusID = ?,
       BlockNo = ?, LotNo = ?, Occupants = ?, IsSenior = ?,
       SeniorCount = ?, PreviousReading = ?, LotArea = ?, HouseTypeID = ?
@@ -99,7 +99,7 @@ export const updateClient = async (clientId, updatedClient) => {
 
 // DELETE
 export const deleteClient = async (id) => {
-  const [result] = await db.query('DELETE FROM tblClient WHERE ClientID = ?', [id]);
+  const [result] = await db.query('DELETE FROM tblclient WHERE ClientID = ?', [id]);
   return result.affectedRows;
 };
 
@@ -107,6 +107,6 @@ export const deleteClient = async (id) => {
 
 // READ ALL House Type
 export const getAllHouseType = async () => {
-  const [rows] = await db.query('SELECT HouseTypeID,HouseTypeDesc FROM tblHouseType');
+  const [rows] = await db.query('SELECT HouseTypeID,HouseTypeDesc FROM tblhousetype');
   return rows;
 };

@@ -40,7 +40,7 @@ export const getAccountDetails = async (AccountCode) => {
         IFNULL(gl.AccountCode, 0) AS AccountCode,
         coa.COADesc
       FROM tblchartofaccounts coa
-      LEFT JOIN tblGLControl gl
+      LEFT JOIN tblglcontrol gl
         ON gl.AccountCode = coa.COAID
       WHERE coa.COAID = ?`
     ,[AccountCode]);
@@ -69,7 +69,7 @@ export const postFrontOfficeTransaction = async (transaction, transactionDetails
       // Get new CTLNo
       const [ctlRows] = await conn.query(`
         SELECT COALESCE(MAX(CTLNo), 0) + 1 AS CTLNo 
-        FROM tblTransactionSummary 
+        FROM tbltransactionsummary 
         WHERE TransactionCode = ? AND TransYear = YEAR(NOW())
       `, [transaction.TransactionCode]);
 
@@ -199,7 +199,7 @@ export const reverseFrontOfficeTransaction = async (transaction) => {
       // Get new CTLNo
       const [ctlRows] = await conn.query(`
         SELECT COALESCE(MAX(CTLNo), 0) + 1 AS CTLNo 
-        FROM tblTransactionSummary 
+        FROM tbltransactionsummary 
         WHERE TransactionCode = ? AND TransYear = YEAR(NOW())
       `, [ReversalTransCode]);
 
@@ -233,7 +233,7 @@ export const reverseFrontOfficeTransaction = async (transaction) => {
       ]);
 
       await conn.query(
-      `UPDATE tblTransactionDetails SET 
+      `UPDATE tbltransactiondetails SET 
         UPDTag = 5
         WHERE TransactionCode = ?
         AND CTLNo = ?

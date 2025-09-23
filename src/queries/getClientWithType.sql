@@ -15,7 +15,7 @@ SELECT
     c.PreviousReading,
     c.LotArea,
     c.HouseTypeID
-FROM tblClient c
-INNER JOIN tblClientStatus cs ON cs.ClientStatusID = c.ClientAccountStatusID
+FROM tblclient c
+INNER JOIN tblclientstatus cs ON cs.ClientStatusID = c.ClientAccountStatusID
 WHERE c.ClientAccountStatusID = ?
 ORDER BY c.BlockNo, c.LotNo;

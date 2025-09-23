@@ -10,8 +10,8 @@ SELECT
         WHEN td.Amt < 0 THEN CAST(td.Amt * -1 AS CHAR)
         ELSE ''
     END AS Credit
-FROM tblTransactionDetails td
-INNER JOIN tblChartofaccounts coa
+FROM tbltransactiondetails td
+INNER JOIN tblchartofaccounts coa
     ON coa.COAID = td.AccountCode
 WHERE td.TransactionCode = ?
   AND td.CTLNo = ?
