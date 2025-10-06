@@ -1,6 +1,6 @@
 import {
     getQuestionById
-  } from '../models/questionController.js';
+  } from '../models/questionModel.js';
 
 
 // READ ONE
