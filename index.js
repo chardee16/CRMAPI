@@ -13,6 +13,7 @@ import frontOfficeRoutes from './src/routes/frontOfficeRoutes.js';
 import userRoutes from './src/routes/userRoutes.js';
 import agentRoutes from './src/routes/agentRoutes.js';
 import reportRoutes from './src/routes/reportRoutes.js';
+import questionRoute from './src/routes/questionRoute.js';
 
 
 
@@ -34,6 +35,7 @@ app.use('/frontoffice', frontOfficeRoutes);
 app.use('/user', userRoutes);
 app.use('/agent', agentRoutes);
 app.use('/report', reportRoutes);
+app.use('/questions', questionRoute);
 
 app.get('/', (req, res) =>
     res.status(200).json({ status: 'API running!' })
