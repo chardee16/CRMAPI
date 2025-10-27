@@ -14,6 +14,7 @@ import userRoutes from './src/routes/userRoutes.js';
 import agentRoutes from './src/routes/agentRoutes.js';
 import reportRoutes from './src/routes/reportRoutes.js';
 import questionRoute from './src/routes/questionRoute.js';
+import dashboardRoute from './src/routes/dashboardRoute.js';
 
 
 
@@ -36,6 +37,7 @@ app.use('/user', userRoutes);
 app.use('/agent', agentRoutes);
 app.use('/report', reportRoutes);
 app.use('/questions', questionRoute);
+app.use('/dashboard', dashboardRoute);
 
 app.get('/', (req, res) =>
     res.status(200).json({ status: 'API running!' })
