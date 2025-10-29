@@ -7,13 +7,15 @@ import {
   updateClientController,
   deleteClientController,
   getAllHouseTypeController,
-  getWithTypeClientsController
+  getWithTypeClientsController,
+  getClientPreviousReadingController
 } from '../controllers/clientController.js';
 
 const router = express.Router();
 
 router.post('/', verifyToken, createClientController);
 router.get('/gethousetype', verifyToken, getAllHouseTypeController);
+router.get('/clientpreviousreading', verifyToken, getClientPreviousReadingController);
 router.get('/withtype', verifyToken, getWithTypeClientsController);
 router.get('/getallclient',verifyToken, getAllClientsController);
 router.get('/:clientId', verifyToken, getClientByIdController);

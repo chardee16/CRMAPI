@@ -110,3 +110,11 @@ export const getAllHouseType = async () => {
   const [rows] = await db.query('SELECT HouseTypeID,HouseTypeDesc FROM tblhousetype');
   return rows;
 };
+
+
+
+export const getClientPreviousReading = async (ClientID) => {
+  const [rows] = await db.query(`SELECT IFNULL((SELECT PreviousReading FROM tblclient WHERE ClientID = ?),0) AS PreviousReading`,[ClientID]);
+  
+  return rows[0].PreviousReading;
+};

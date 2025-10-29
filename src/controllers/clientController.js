@@ -5,7 +5,8 @@ import {
     updateClient,
     deleteClient,
     getAllHouseType,
-    getWithTypeClients
+    getWithTypeClients,
+    getClientPreviousReading
   } from '../models/clientModel.js';
 
 // CREATE
@@ -88,3 +89,15 @@ export const getAllHouseTypeController = async (req, res) => {
     console.log('request error: ', err.message);
   }
 };
+
+
+
+  export const getClientPreviousReadingController = async (req, res) => {
+    try {
+      const count = await getClientPreviousReading(req.query.ClientID);
+      res.status(200).send(count.toString());
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+      console.log('request error: ', err.message);
+    }
+  };
