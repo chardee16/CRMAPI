@@ -6,13 +6,17 @@ import {
   getPaymentReportController,
   fetchPaymentController ,
   deletePaymentController,
-  updateMultiplePaymentsController
+  updateMultiplePaymentsController,
+  getPoolRateController
 } from '../controllers/paymentController.js';
 
 const router = express.Router();
 router.post('/', verifyToken, createPaymentController);
 // router.get('/', getAllClientsController);
 router.get('/fetchpayment', verifyToken,  fetchPaymentController );
+
+router.get('/getpoolrates', verifyToken,  getPoolRateController );
+
 router.get('/', verifyToken, getPaymentReportController);
 router.get('/:clientId', verifyToken, getPaymentByIdController);
 // router.put('/:id', updateClientController);

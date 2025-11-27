@@ -134,3 +134,10 @@ export const updateMultiplePayments = async (paymentIds) => {
     console.error('Error updating payments:', error);
   }
 };
+
+
+
+export const getPoolRate = async () => { 
+  const [rows] = await db.query('SELECT rateid,rate_description,rate_amount FROM tblpool_rate');
+  return rows;
+};

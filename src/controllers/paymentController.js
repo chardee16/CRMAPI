@@ -4,7 +4,8 @@ import {
     getPaymentReport,
     fetchPayment,
     deletePayment,
-    updateMultiplePayments
+    updateMultiplePayments,
+    getPoolRate
   } from '../models/paymentModel.js';
 
 
@@ -94,6 +95,19 @@ import {
       await updateMultiplePayments(paymentIds);
       res.status(200).json({ message: 'Payment updated' });
       
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  };
+
+
+
+  export const getPoolRateController = async (req, res) => {
+    try {
+      //console.log('Request Parameter:', req.query);
+      const rate = await getPoolRate();
+
+      res.status(200).json(rate);
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
